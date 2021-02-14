@@ -1,0 +1,30 @@
+const webDriver  = require ('selenium-webdriver');
+const driver = new webDriver.Builder().forBrowser('firefox').build();
+const By = webDriver.By;
+
+(async function testRun() {
+    await driver.get('https://www.avito.ru/#login');
+    const login = await driver.findElement(By.xpath('//input [@class= "input-input-25uCh"][@name="login"]'));
+    login.sendKeys('');
+    await driver.sleep(1000);
+    const password = await driver.findElement(By.xpath('//input [@class= "input-input-25uCh"][@name="password"]'));
+    password.sendKeys('');
+    await driver.sleep(1000);
+    password.sendKeys(webDriver.Key.ENTER);
+    await driver.sleep(3000);
+    await driver.get('https://www.avito.ru/sochi/lichnye_veschi?cd=1&d=1');
+    const results = await driver.findElements(By.xpath('//div[@class="iva-item-titleStep-2bjuh"]'));
+    console.log(results.length);
+    await driver.sleep(3000);
+    await (results[0]).click();
+    await driver.sleep(1000);
+    const buy = await driver.findElements(By.xpath('//button[@data-marker="delivery-item-button-main"]'));
+    console.log(buy.length);
+    await driver.sleep(1000);
+    await (buy[0]).click();
+    const phone = await driver.findElements(By.xpath('//input[@class="input-input-25uCh"][@name="phone"]'));
+    await driver.sleep(1000);
+    console.log(phone);
+    await driver.sleep(1000);
+    driver.close();
+}) ();
